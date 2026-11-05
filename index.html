@@ -7,39 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 侧边栏 -->
+    <!-- 全局动态山水背景 (置于底层) -->
+    <canvas id="scenery-canvas"></canvas>
+
     <div class="sidebar">
-        <div class="logo">⛰️ 东方客栈 v2.1</div>
+        <div class="logo">⛰️ 东方客栈 <span style="font-size:12px; color:#ddd;">v3.0</span></div>
         <ul id="nav-menu">
-            <li><a href="javascript:void(0)" onclick="switchApp('landscape')"><span class="nav-icon">🏞️</span><span class="nav-text">山水世界 (主页)</span></a></li>
-            <li><a href="javascript:void(0)" onclick="switchApp('siku')"><span class="nav-icon">📚</span><span class="nav-text">四库全书分享</span></a></li>
-            <li><a href="javascript:void(0)" onclick="switchApp('message')"><span class="nav-icon">📝</span><span class="nav-text">我的博客</span></a></li>
-            <li><a href="javascript:void(0)" onclick="switchApp('movie')"><span class="nav-icon">🎬</span><span class="nav-text">综合影视导航</span></a></li>
+            <li><a href="javascript:void(0)" onclick="switchApp('landscape')"><span class="nav-icon">🏞️</span><span class="nav-text" style="color:#2ecc71; font-weight:bold;">山水世界 (主页)</span></a></li>
+            <li><a href="javascript:void(0)" onclick="switchApp('siku')"><span class="nav-icon">📚</span><span class="nav-text" style="color:#1abc9c; font-weight:bold;">四库全书</span></a></li>
+            <li><a href="javascript:void(0)" onclick="switchApp('message')"><span class="nav-icon">📝</span><span class="nav-text" style="color:#3498db; font-weight:bold;">留言客栈</span></a></li>
+            <div class="menu-divider"></div>
         </ul>
     </div>
-
-    <!-- 主内容滚动区 -->
+    
     <div class="main-content" id="main-scroll-area">
-        
-        <!-- 1. 山水世界 -->
-        <div id="landscape-container" class="app-container">
-            <canvas id="scenery-canvas"></canvas>
-            <div style="position: absolute; top: 20%; left: 50%; transform: translateX(-50%); text-align: center; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); pointer-events: none; z-index: 2;">
-                <h1 style="font-size: 3em; letter-spacing: 5px;">东方山水世界</h1>
-                <p style="font-size: 1.5em; margin-top: 10px;">青山不墨千秋画，绿水无弦万古琴</p>
-            </div>
+        <!-- 模块 1：主页欢迎语 -->
+        <div id="landscape-container" class="app-container" style="display: block; text-align:center; padding-top: 15vh;">
+            <h1 style="font-size: 4em; letter-spacing: 12px; margin: 0; font-family: 'KaiTi', 'STKaiti', serif; color:#1e272e; text-shadow: 2px 2px 10px rgba(255,255,255,0.9);">东方山水世界</h1>
+            <p style="font-size: 1.5em; letter-spacing: 4px; margin-top: 20px; font-family: 'KaiTi', 'STKaiti', serif; color:#2c3e50; text-shadow: 1px 1px 5px rgba(255,255,255,0.8);">青山不墨千秋画，绿水无弦万古琴</p>
         </div>
-        
-        <!-- 2. 四库全书 -->
+
+        <!-- 模块 2：四库全书分享 -->
         <div id="siku-container" class="app-container">
             <div class="siku-header">
                 <h1>📚 四库全书分享栏</h1>
                 <p>经史子集，国学经典，尽在四库书窝</p>
             </div>
             <div class="gzh-banner">
-                <p>微信搜一搜，关注【四库书窝】公众号</p>
+                <h2 style="margin-top:0;">微信搜一搜，关注【四库书窝】公众号</h2>
                 <p>获取《四库全书》完整珍藏版、每日国学经典推送及更多古籍资源</p>
-                <p>扫码关注，与万千书友共赏国粹！</p>
+                <img src="qrcode.jpg" alt="公众号二维码" onerror="this.src='https://via.placeholder.com/160x160?text=二维码占位'">
+                <p style="color:#8b0000; font-weight:bold; font-size: 1.2em;">扫码关注，与万千书友共赏国粹！</p>
             </div>
             <div class="book-grid">
                 <div class="book-card"><h3>【经部】</h3><p>收录儒家十三经及历代注疏，修身齐家之本。</p></div>
@@ -47,24 +45,26 @@
                 <div class="book-card"><h3>【子部】</h3><p>涵盖诸子百家、释道、兵法、医术。包罗万象，智慧渊博。</p></div>
                 <div class="book-card"><h3>【集部】</h3><p>历代文人的诗文总集与别集。辞藻华美，千古绝唱。</p></div>
             </div>
-            <h2 class="section-title">📜 书窝最新推文</h2>
-            <div id="siku-articles"></div>
+            <div style="margin-top: 50px; border-top: 2px dashed #333; padding-top: 30px;">
+                <h2 style="text-align: left; border-left: 5px solid #8b0000; padding-left: 10px;">📜 书窝最新推文</h2>
+                <div class="grid" id="siku-articles"></div>
+            </div>
         </div>
 
-        <!-- 3. 留言板 -->
+        <!-- 模块 3：留言交流板 -->
         <div id="message-container" class="app-container">
             <h2 class="msg-board-title">📝 留言交流板</h2>
-            <p>欢迎各路英雄好汉留下足迹</p>
-            <p>相逢即是缘，少侠不留句话再走吗？客栈已启用全新的外置留言系统，安全快捷。</p>
-            <br>
-            <a href="https://support.qq.com/products/YOUR_PRODUCT_ID" target="_blank" class="btn-submit">🕊️ 前往留言板</a>
+            <div class="msg-form">
+                <h3 style="color:#2c3e50; font-size: 24px; margin-bottom:20px;">欢迎各路英雄好汉留下足迹</h3>
+                <p style="color:#2c3e50; font-size: 16px; margin-bottom:40px; line-height: 1.8;">相逢即是缘，少侠不留句话再走吗？<br>客栈已启用全新的外置留言系统，安全快捷。</p>
+                <a href="https://support.qq.com/products/YOUR_PRODUCT_ID" target="_blank" class="btn-submit" style="text-decoration:none; display:inline-block; font-size: 18px; padding: 15px 40px; border-radius: 30px;">🕊️ 前往留言板</a>
+            </div>
         </div>
 
-        <!-- 4. 影视导航 (由 movie.js 动态生成) -->
+        <!-- 模块 4：影视大全 -->
         <div id="movie-container" class="app-container"></div>
     </div>
 
-    <!-- 引入脚本 -->
     <script src="main.js"></script>
     <script src="movie.js"></script>
 </body>
