@@ -7,7 +7,8 @@ function switchApp(appType, anchorId) {
     document.getElementById('siku-container').style.display = 'none';
     document.getElementById('message-container').style.display = 'none';
     document.getElementById('movie-container').style.display = 'none';
-
+    document.getElementById('caipiao-container').style.display = 'none';
+    
     if (appType === 'landscape') {
         document.getElementById('landscape-container').style.display = 'block';
         scrollArea.scrollTo(0, 0);
@@ -19,6 +20,8 @@ function switchApp(appType, anchorId) {
         scrollArea.scrollTo(0, 0);
     } else if (appType === 'movie') {
         document.getElementById('movie-container').style.display = 'block';
+  } else if (appType === 'caipiao') {
+        document.getElementById('caipiao-container').style.display = 'block';
         if (anchorId) setTimeout(() => { const target = document.getElementById(anchorId); if(target) scrollArea.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' }); }, 50);
     }
 }
