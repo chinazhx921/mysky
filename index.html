@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌞东方山水 & 综合影视导航</title>
+    <title>东方山水 & 综合影视导航</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,11 +11,11 @@
     <canvas id="scenery-canvas"></canvas>
 
     <div class="sidebar">
-        <div class="logo">⛰️ 东方客栈 <span style="font-size:12px; color:#ddd;">v3.0</span></div>
+        <div class="logo">⛰️ 东方客栈 <span style="font-size:12px; color:#ddd;">v4.0</span></div>
         <ul id="nav-menu">
             <li><a href="javascript:void(0)" onclick="switchApp('landscape')"><span class="nav-icon">🏞️</span><span class="nav-text" style="color:#2ecc71; font-weight:bold;">山水世界 (主页)</span></a></li>
             <li><a href="javascript:void(0)" onclick="switchApp('siku')"><span class="nav-icon">📚</span><span class="nav-text" style="color:#1abc9c; font-weight:bold;">四库全书</span></a></li>
-             <li><a href="javascript:void(0)" onclick="switchApp('caipiao')"><span class="nav-icon">🎫</span><span class="nav-text" style="color:#3498db; font-weight:bold;">玄学彩票</span></a></li>
+            <li><a href="javascript:void(0)" onclick="switchApp('lottery')"><span class="nav-icon">🔮</span><span class="nav-text" style="color:#9b59b6; font-weight:bold;">玄机彩测</span></a></li>
             <li><a href="javascript:void(0)" onclick="switchApp('message')"><span class="nav-icon">📝</span><span class="nav-text" style="color:#3498db; font-weight:bold;">留言客栈</span></a></li>
             <div class="menu-divider"></div>
         </ul>
@@ -52,26 +52,28 @@
             </div>
         </div>
 
-        <!-- 模块 3：留言交流板 -->
-        <div id="message-container" class="app-container">
-            <h2 class="msg-board-title">📝 留言交流板</h2>
-            <div class="msg-form">
-                <h3 style="color:#2c3e50; font-size: 24px; margin-bottom:20px;">欢迎各路英雄好汉留下足迹</h3>
-                <p style="color:#2c3e50; font-size: 16px; margin-bottom:40px; line-height: 1.8;">相逢即是缘，少侠不留句话再走吗？<br>客栈已启用全新的外置留言系统，安全快捷。</p>
-                <a href="cnn.thsite.top" target="_blank" class="btn-submit" style="text-decoration:none; display:inline-block; font-size: 18px; padding: 15px 40px; border-radius: 30px;">🕊️ 前往留言板</a>
+        <!-- 模块 3：彩票预测 -->
+        <div id="lottery-container" class="app-container">
+            <h2 class="msg-board-title">🔮 玄机彩测 (彩票预测)</h2>
+            <div style="background:rgba(255,255,255,0.85); padding:20px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.08); backdrop-filter: blur(5px); height: calc(100vh - 120px); display: flex; flex-direction: column;">
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color:#2c3e50; font-size:14px;">📌 提示：若下方页面因浏览器安全限制无法加载，请点击右侧按钮前往独立站点查看。</span>
+                    <a href="http://your521.lovie.me" target="_blank" class="btn-submit" style="text-decoration:none; padding: 8px 20px; font-size: 14px;">🌐 独立窗口打开</a>
+                </div>
+                <iframe src="https://your521.lovie.me" style="width:100%; flex-grow:1; border:none; border-radius: 8px; background: #fff;" title="彩票预测"></iframe>
             </div>
         </div>
 
-         <!-- 模块 4：玄学彩票 -->
-        <div id="caipiao-container" class="app-container">
-            <h2 class="caipiao-board-title">🎫 天命还在......</h2>
-            <div class="msg-form">
-                <h3 style="color:#2c3e50; font-size: 24px; margin-bottom:20px;">仅供娱乐，切勿沉迷！</h3>
-                <p style="color:#2c3e50; font-size: 16px; margin-bottom:40px; line-height: 1.8;">命里有时终需有，<br>命里无时莫强求。</p>
-                <a href="your521.lovie.me" target="_blank" class="btn-submit" style="text-decoration:none; display:inline-block; font-size: 18px; padding: 15px 40px; border-radius: 30px;">🕊️ 随缘入口--->></a>
+        <!-- 模块 4：留言交流板 -->
+        <div id="message-container" class="app-container">
+            <h2 class="msg-board-title">📝 留言交流板</h2>
+            <div style="background:rgba(255,255,255,0.85); padding:60px 40px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.08); text-align:center; max-width: 600px; margin: 40px auto; backdrop-filter: blur(5px);">
+                <h3 style="color:#2c3e50; font-size: 24px; margin-bottom:20px;">欢迎各路英雄好汉留下足迹</h3>
+                <p style="color:#7f8c8d; font-size: 16px; margin-bottom:40px; line-height: 1.8;">相逢即是缘，少侠不留句话再走吗？<br>客栈已启用全新的外置留言系统，安全快捷。</p>
+                <a href="https://support.qq.com/products/YOUR_PRODUCT_ID" target="_blank" class="btn-submit" style="text-decoration:none; display:inline-block; font-size: 18px; padding: 15px 40px; border-radius: 30px;">🕊️ 前往留言板</a>
             </div>
         </div>
-        
+
         <!-- 模块 5：影视大全 -->
         <div id="movie-container" class="app-container"></div>
     </div>

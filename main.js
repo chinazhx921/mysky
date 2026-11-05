@@ -1,14 +1,13 @@
 
 const scrollArea = document.getElementById('main-scroll-area');
 
-// 统一背景控制：完全移除 JS 对 backgroundColor 的修改。全站背景由底层的 canvas 提供。
 function switchApp(appType, anchorId) {
     document.getElementById('landscape-container').style.display = 'none';
     document.getElementById('siku-container').style.display = 'none';
     document.getElementById('message-container').style.display = 'none';
     document.getElementById('movie-container').style.display = 'none';
-    document.getElementById('caipiao-container').style.display = 'none';
-    
+    document.getElementById('lottery-container').style.display = 'none';
+
     if (appType === 'landscape') {
         document.getElementById('landscape-container').style.display = 'block';
         scrollArea.scrollTo(0, 0);
@@ -18,10 +17,11 @@ function switchApp(appType, anchorId) {
     } else if (appType === 'message') {
         document.getElementById('message-container').style.display = 'block';
         scrollArea.scrollTo(0, 0);
+    } else if (appType === 'lottery') {
+        document.getElementById('lottery-container').style.display = 'block';
+        scrollArea.scrollTo(0, 0);
     } else if (appType === 'movie') {
         document.getElementById('movie-container').style.display = 'block';
-  } else if (appType === 'caipiao') {
-        document.getElementById('caipiao-container').style.display = 'block';
         if (anchorId) setTimeout(() => { const target = document.getElementById(anchorId); if(target) scrollArea.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' }); }, 50);
     }
 }
@@ -40,7 +40,6 @@ function initScenery() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
-    // 初始化白云
     for(let i=0; i<8; i++) {
         clouds.push({
             x: Math.random() * width,
@@ -50,7 +49,6 @@ function initScenery() {
         });
     }
     
-    // 初始化游鱼
     for(let i=0; i<20; i++) {
         fishes.push({
             x: Math.random() * width,
@@ -72,7 +70,6 @@ function resizeCanvas() {
 }
 
 function drawMountains() {
-    // 远山 (淡墨)
     ctx.fillStyle = 'rgba(178, 190, 195, 0.8)';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.65);
@@ -84,7 +81,6 @@ function drawMountains() {
     ctx.lineTo(0, height);
     ctx.fill();
 
-    // 近山 (青绿)
     ctx.fillStyle = 'rgba(85, 239, 196, 0.85)';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.75);
@@ -96,7 +92,6 @@ function drawMountains() {
     ctx.lineTo(0, height);
     ctx.fill();
     
-    // 山体渐变遮罩融合
     const gradient = ctx.createLinearGradient(0, height*0.4, 0, height*0.8);
     gradient.addColorStop(0, 'rgba(233,228,212,0)');
     gradient.addColorStop(1, 'rgba(233,228,212,0.5)');
@@ -105,7 +100,6 @@ function drawMountains() {
 }
 
 function drawWater() {
-    // 绿水
     const waterGrad = ctx.createLinearGradient(0, height*0.7, 0, height);
     waterGrad.addColorStop(0, 'rgba(129, 236, 236, 0.4)');
     waterGrad.addColorStop(1, 'rgba(0, 206, 201, 0.8)');
@@ -116,11 +110,9 @@ function drawWater() {
 function animateScenery() {
     ctx.clearRect(0, 0, width, height);
     
-    // 基础底色 (宣纸色)
     ctx.fillStyle = '#e9e4d4';
     ctx.fillRect(0, 0, width, height);
 
-    // 太阳
     ctx.fillStyle = 'rgba(214, 48, 49, 0.7)';
     ctx.beginPath();
     ctx.arc(width * 0.85, height * 0.25, 55, 0, Math.PI * 2);
@@ -128,7 +120,6 @@ function animateScenery() {
 
     drawMountains();
     
-    // 画云
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
     clouds.forEach(cloud => {
         ctx.beginPath();
@@ -145,13 +136,11 @@ function animateScenery() {
 
     drawWater();
 
-    // 画鱼
     fishes.forEach(fish => {
         ctx.fillStyle = 'rgba(45, 52, 54, 0.8)'; 
         ctx.beginPath();
         ctx.ellipse(fish.x, fish.y, fish.size*2, fish.size, 0, 0, Math.PI*2);
         ctx.fill();
-        // 鱼尾巴
         ctx.beginPath();
         ctx.moveTo(fish.speed > 0 ? fish.x - fish.size*2 : fish.x + fish.size*2, fish.y);
         ctx.lineTo(fish.speed > 0 ? fish.x - fish.size*3.5 : fish.x + fish.size*3.5, fish.y - fish.size*1.5);
