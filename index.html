@@ -11,7 +11,7 @@
     <canvas id="scenery-canvas"></canvas>
 
     <div class="sidebar">
-        <div class="logo">⛰️ 东方客栈 <span style="font-size:12px; color:#ddd;">v4.0</span></div>
+        <div class="logo">⛰️ 东方客栈 <span style="font-size:12px; color:#ddd;">v4.1</span></div>
         <ul id="nav-menu">
             <li><a href="javascript:void(0)" onclick="switchApp('landscape')"><span class="nav-icon">🏞️</span><span class="nav-text" style="color:#2ecc71; font-weight:bold;">山水世界 (主页)</span></a></li>
             <li><a href="javascript:void(0)" onclick="switchApp('siku')"><span class="nav-icon">📚</span><span class="nav-text" style="color:#1abc9c; font-weight:bold;">四库全书</span></a></li>
@@ -52,15 +52,16 @@
             </div>
         </div>
 
-        <!-- 模块 3：彩票预测 -->
+        <!-- 模块 3：彩票预测 (已修复防嵌套问题) -->
         <div id="lottery-container" class="app-container">
-            <h2 class="msg-board-title">🔮 玄机彩测 (彩票预测)</h2>
-            <div style="background:rgba(255,255,255,0.85); padding:20px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.08); backdrop-filter: blur(5px); height: calc(100vh - 120px); display: flex; flex-direction: column;">
-                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color:#2c3e50; font-size:14px;">📌 提示：若下方页面因浏览器安全限制无法加载，请点击右侧按钮前往独立站点查看。</span>
-                    <a href="http://your521.lovie.me" target="_blank" class="btn-submit" style="text-decoration:none; padding: 8px 20px; font-size: 14px;">🌐 独立窗口打开</a>
-                </div>
-                <iframe src="https://your521.lovie.me" style="width:100%; flex-grow:1; border:none; border-radius: 8px; background: #fff;" title="彩票预测"></iframe>
+            <h2 class="msg-board-title">🔮 玄机彩测</h2>
+            <div style="background:rgba(255,255,255,0.85); padding:60px 40px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.08); text-align:center; max-width: 600px; margin: 40px auto; backdrop-filter: blur(5px);">
+                <div style="font-size: 60px; margin-bottom: 20px;">🎰</div>
+                <h3 style="color:#2c3e50; font-size: 24px; margin-bottom:20px;">玄机彩测预测系统</h3>
+                <p style="color:#7f8c8d; font-size: 16px; margin-bottom:40px; line-height: 1.8;">
+                    （注：该预测系统启用了安全防护，无法在客栈内直接展示）<br>请点击下方按钮，前往独立玄机阁查看今日运势与预测。
+                </p>
+                <a href="http://your521.lovie.me" target="_blank" class="btn-submit" style="text-decoration:none; display:inline-block; font-size: 18px; padding: 15px 40px; border-radius: 30px; background-color: #9b59b6;">🔮 开启玄机彩测</a>
             </div>
         </div>
 
