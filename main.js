@@ -160,22 +160,28 @@ function animateScenery() {
 // ==========================================
 const wxArticles = [
     {
-        title: "《四库全书》入门指南：从哪里开始读起？",
+        title: " IP纯淨度检测网站 (Ping0) ",
         date: "2026-11-01",
-        desc: "浩如烟海的古籍中，为你挑选最适合现代人品读的十本国学经典...",
-        url: "https://mp.weixin.qq.com/"
+        desc: "为你挑选最适合的环境...",
+        url: "https://ping0.cc/"
     },
     {
-        title: "细数金庸武侠里的真实历史背景",
+        title: "IP归属地查询网站 (IPinfo) ",
         date: "2026-10-15",
-        desc: "带你走进历史，看看靖康之耻与郭靖杨过的名字渊源...",
-        url: "https://mp.weixin.qq.com/"
+        desc: "带你走进外面的花园...",
+        url: "https://ipinfo.io/"
     },
     {
-        title: "水墨画卷《清明上河图》隐藏的市井百态",
+        title: "全访问查询你的IP地址 ",
         date: "2026-10-01",
-        desc: "放大十倍看汴京，原来一千年前的宋朝人生活这么丰富多彩...",
-        url: "https://mp.weixin.qq.com/"
+        desc: "放大十倍看，生活这么丰富多彩...",
+        url: "https://ip111.cn/"
+    }，
+    {
+        title: "测速网站 ",
+        date: "2026-10-01",
+        desc: "看4k还是180P，你自己选择吧...",
+        url: "https://www.speedtest.net/"
     }
 ];
 
