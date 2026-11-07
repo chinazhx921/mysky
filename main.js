@@ -6,28 +6,29 @@ function switchApp(appType, anchorId) {
     document.getElementById('siku-container').style.display = 'none';
     document.getElementById('message-container').style.display = 'none';
     document.getElementById('movie-container').style.display = 'none';
-    document.getElementById('lottery-container').style.display = 'none';
 
     if (appType === 'landscape') {
         document.getElementById('landscape-container').style.display = 'block';
+        document.body.style.backgroundColor = '#e9e4d4'; 
         scrollArea.scrollTo(0, 0);
+        resizeCanvas();
     } else if (appType === 'siku') {
         document.getElementById('siku-container').style.display = 'block';
+        document.body.style.backgroundColor = '#e9e4d4'; 
         scrollArea.scrollTo(0, 0);
     } else if (appType === 'message') {
         document.getElementById('message-container').style.display = 'block';
-        scrollArea.scrollTo(0, 0);
-    } else if (appType === 'lottery') {
-        document.getElementById('lottery-container').style.display = 'block';
+        document.body.style.backgroundColor = '#f4f6f9'; 
         scrollArea.scrollTo(0, 0);
     } else if (appType === 'movie') {
         document.getElementById('movie-container').style.display = 'block';
+        document.body.style.backgroundColor = '#f4f6f9'; 
         if (anchorId) setTimeout(() => { const target = document.getElementById(anchorId); if(target) scrollArea.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' }); }, 50);
     }
 }
 
 // ==========================================
-// 动态东方山水画卷 Canvas 引擎 (作为全局背景)
+// 动态东方山水画卷 Canvas 引擎
 // ==========================================
 const canvas = document.getElementById('scenery-canvas');
 const ctx = canvas.getContext('2d');
@@ -35,21 +36,24 @@ let width, height;
 
 let clouds = [];
 let fishes = [];
+let animationId;
 
 function initScenery() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
-    for(let i=0; i<8; i++) {
+    // 初始化白云
+    for(let i=0; i<6; i++) {
         clouds.push({
             x: Math.random() * width,
-            y: Math.random() * (height * 0.4) + 20,
+            y: Math.random() * (height * 0.35) + 50,
             size: Math.random() * 40 + 30,
-            speed: Math.random() * 0.3 + 0.1
+            speed: Math.random() * 0.4 + 0.1
         });
     }
     
-    for(let i=0; i<20; i++) {
+    // 初始化游鱼
+    for(let i=0; i<15; i++) {
         fishes.push({
             x: Math.random() * width,
             y: height * 0.75 + Math.random() * (height * 0.2),
@@ -63,14 +67,15 @@ function initScenery() {
 
 function resizeCanvas() {
     if(!canvas) return;
-    width = window.innerWidth;
+    width = document.getElementById('landscape-container').clientWidth || window.innerWidth;
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
 }
 
 function drawMountains() {
-    ctx.fillStyle = 'rgba(178, 190, 195, 0.8)';
+    // 远山 (淡墨)
+    ctx.fillStyle = '#b2bec3';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.65);
     ctx.lineTo(width * 0.15, height * 0.45);
@@ -81,7 +86,8 @@ function drawMountains() {
     ctx.lineTo(0, height);
     ctx.fill();
 
-    ctx.fillStyle = 'rgba(85, 239, 196, 0.85)';
+    // 近山 (青绿)
+    ctx.fillStyle = '#55efc4';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.75);
     ctx.lineTo(width * 0.25, height * 0.55);
@@ -92,17 +98,19 @@ function drawMountains() {
     ctx.lineTo(0, height);
     ctx.fill();
     
+    // 山体渐变遮罩融合
     const gradient = ctx.createLinearGradient(0, height*0.4, 0, height*0.8);
     gradient.addColorStop(0, 'rgba(233,228,212,0)');
-    gradient.addColorStop(1, 'rgba(233,228,212,0.5)');
+    gradient.addColorStop(1, 'rgba(233,228,212,0.6)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, height*0.4, width, height*0.6);
 }
 
 function drawWater() {
+    // 绿水
     const waterGrad = ctx.createLinearGradient(0, height*0.7, 0, height);
     waterGrad.addColorStop(0, 'rgba(129, 236, 236, 0.4)');
-    waterGrad.addColorStop(1, 'rgba(0, 206, 201, 0.8)');
+    waterGrad.addColorStop(1, 'rgba(0, 206, 201, 0.7)');
     ctx.fillStyle = waterGrad;
     ctx.fillRect(0, height * 0.7, width, height * 0.3);
 }
@@ -110,17 +118,20 @@ function drawWater() {
 function animateScenery() {
     ctx.clearRect(0, 0, width, height);
     
+    // 背景色 (宣纸色)
     ctx.fillStyle = '#e9e4d4';
     ctx.fillRect(0, 0, width, height);
 
-    ctx.fillStyle = 'rgba(214, 48, 49, 0.7)';
+    // 太阳
+    ctx.fillStyle = 'rgba(214, 48, 49, 0.6)';
     ctx.beginPath();
-    ctx.arc(width * 0.85, height * 0.25, 55, 0, Math.PI * 2);
+    ctx.arc(width * 0.85, height * 0.25, 45, 0, Math.PI * 2);
     ctx.fill();
 
     drawMountains();
     
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    // 画云
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
     clouds.forEach(cloud => {
         ctx.beginPath();
         ctx.arc(cloud.x, cloud.y, cloud.size, 0, Math.PI*2);
@@ -136,11 +147,13 @@ function animateScenery() {
 
     drawWater();
 
+    // 画鱼
     fishes.forEach(fish => {
-        ctx.fillStyle = 'rgba(45, 52, 54, 0.8)'; 
+        ctx.fillStyle = 'rgba(45, 52, 54, 0.7)'; // 水墨鱼
         ctx.beginPath();
         ctx.ellipse(fish.x, fish.y, fish.size*2, fish.size, 0, 0, Math.PI*2);
         ctx.fill();
+        // 鱼尾巴
         ctx.beginPath();
         ctx.moveTo(fish.speed > 0 ? fish.x - fish.size*2 : fish.x + fish.size*2, fish.y);
         ctx.lineTo(fish.speed > 0 ? fish.x - fish.size*3.5 : fish.x + fish.size*3.5, fish.y - fish.size*1.5);
@@ -152,7 +165,7 @@ function animateScenery() {
         if(fish.speed < 0 && fish.x < -20) fish.x = width + 20;
     });
 
-    requestAnimationFrame(animateScenery);
+    animationId = requestAnimationFrame(animateScenery);
 }
 
 // ==========================================
@@ -160,28 +173,22 @@ function animateScenery() {
 // ==========================================
 const wxArticles = [
     {
-        title: " IP纯淨度检测网站 (Ping0) ",
+        title: "他每次都说顺路，定位却显示他住城北",
         date: "2026-11-01",
-        desc: "为你挑选最适合的环境...",
-        url: "https://ping0.cc/"
+        desc: "茫茫人海、爱恨只在一念之间...",
+        url: "https://cnn.thsite.top/2026/09/24/%e4%bb%96%e6%af%8f%e6%ac%a1%e9%83%bd%e8%af%b4%e9%a1%ba%e8%b7%af%ef%bc%8c%e5%ae%9a%e4%bd%8d%e5%8d%b4%e6%98%be%e7%a4%ba%e4%bb%96%e4%bd%8f%e5%9f%8e%e5%8c%97/"
     },
     {
-        title: "IP归属地查询网站 (IPinfo) ",
+        title: "细数古诗词历史背景",
         date: "2026-10-15",
-        desc: "带你走进外面的花园...",
-        url: "https://ipinfo.io/"
+        desc: "带你走进山水，看看水墨间是否有花草...",
+        url: "https://www.bing.com/search?q=%E6%90%9C%E9%9F%B5"
     },
     {
-        title: "全访问查询你的IP地址 ",
+        title: "隐藏的市井百态",
         date: "2026-10-01",
-        desc: "放大十倍看，生活这么丰富多彩...",
-        url: "https://ip111.cn/"
-    }，
-    {
-        title: "测速网站 ",
-        date: "2026-10-01",
-        desc: "看4k还是180P，你自己选择吧...",
-        url: "https://www.speedtest.net/"
+        desc: "原来生活这么丰富多彩...",
+        url: "https://www.bing.com/search?q=%E5%B9%B3%E5%87%A1%E7%9A%84%E4%B8%96%E7%95%8C"
     }
 ];
 
@@ -191,7 +198,7 @@ function initWxArticles() {
     let html = '';
     wxArticles.forEach(article => {
         html += `
-            <a href="${article.url}" target="_blank" class="card">
+            <a href="${article.url}" target="_blank" class="card" style="background: rgba(255,255,255,0.7); border: 1px solid #ccc;">
                 <div class="avatar" style="background-color: #8b0000; font-size: 14px;">推文</div>
                 <div class="info">
                     <div class="name" style="font-size: 16px; color: #8b0000;">${article.title}</div>
