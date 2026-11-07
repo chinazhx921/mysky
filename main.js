@@ -6,29 +6,28 @@ function switchApp(appType, anchorId) {
     document.getElementById('siku-container').style.display = 'none';
     document.getElementById('message-container').style.display = 'none';
     document.getElementById('movie-container').style.display = 'none';
+    document.getElementById('lottery-container').style.display = 'none';
 
     if (appType === 'landscape') {
         document.getElementById('landscape-container').style.display = 'block';
-        document.body.style.backgroundColor = '#e9e4d4'; 
         scrollArea.scrollTo(0, 0);
-        resizeCanvas();
     } else if (appType === 'siku') {
         document.getElementById('siku-container').style.display = 'block';
-        document.body.style.backgroundColor = '#e9e4d4'; 
         scrollArea.scrollTo(0, 0);
     } else if (appType === 'message') {
         document.getElementById('message-container').style.display = 'block';
-        document.body.style.backgroundColor = '#f4f6f9'; 
+        scrollArea.scrollTo(0, 0);
+    } else if (appType === 'lottery') {
+        document.getElementById('lottery-container').style.display = 'block';
         scrollArea.scrollTo(0, 0);
     } else if (appType === 'movie') {
         document.getElementById('movie-container').style.display = 'block';
-        document.body.style.backgroundColor = '#f4f6f9'; 
         if (anchorId) setTimeout(() => { const target = document.getElementById(anchorId); if(target) scrollArea.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' }); }, 50);
     }
 }
 
 // ==========================================
-// 动态东方山水画卷 Canvas 引擎
+// 动态东方山水画卷 Canvas 引擎 (作为全局背景)
 // ==========================================
 const canvas = document.getElementById('scenery-canvas');
 const ctx = canvas.getContext('2d');
@@ -36,24 +35,21 @@ let width, height;
 
 let clouds = [];
 let fishes = [];
-let animationId;
 
 function initScenery() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
-    // 初始化白云
-    for(let i=0; i<6; i++) {
+    for(let i=0; i<8; i++) {
         clouds.push({
             x: Math.random() * width,
-            y: Math.random() * (height * 0.35) + 50,
+            y: Math.random() * (height * 0.4) + 20,
             size: Math.random() * 40 + 30,
-            speed: Math.random() * 0.4 + 0.1
+            speed: Math.random() * 0.3 + 0.1
         });
     }
     
-    // 初始化游鱼
-    for(let i=0; i<15; i++) {
+    for(let i=0; i<20; i++) {
         fishes.push({
             x: Math.random() * width,
             y: height * 0.75 + Math.random() * (height * 0.2),
@@ -67,15 +63,14 @@ function initScenery() {
 
 function resizeCanvas() {
     if(!canvas) return;
-    width = document.getElementById('landscape-container').clientWidth || window.innerWidth;
+    width = window.innerWidth;
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
 }
 
 function drawMountains() {
-    // 远山 (淡墨)
-    ctx.fillStyle = '#b2bec3';
+    ctx.fillStyle = 'rgba(178, 190, 195, 0.8)';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.65);
     ctx.lineTo(width * 0.15, height * 0.45);
@@ -86,8 +81,7 @@ function drawMountains() {
     ctx.lineTo(0, height);
     ctx.fill();
 
-    // 近山 (青绿)
-    ctx.fillStyle = '#55efc4';
+    ctx.fillStyle = 'rgba(85, 239, 196, 0.85)';
     ctx.beginPath();
     ctx.moveTo(0, height * 0.75);
     ctx.lineTo(width * 0.25, height * 0.55);
@@ -98,19 +92,17 @@ function drawMountains() {
     ctx.lineTo(0, height);
     ctx.fill();
     
-    // 山体渐变遮罩融合
     const gradient = ctx.createLinearGradient(0, height*0.4, 0, height*0.8);
     gradient.addColorStop(0, 'rgba(233,228,212,0)');
-    gradient.addColorStop(1, 'rgba(233,228,212,0.6)');
+    gradient.addColorStop(1, 'rgba(233,228,212,0.5)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, height*0.4, width, height*0.6);
 }
 
 function drawWater() {
-    // 绿水
     const waterGrad = ctx.createLinearGradient(0, height*0.7, 0, height);
     waterGrad.addColorStop(0, 'rgba(129, 236, 236, 0.4)');
-    waterGrad.addColorStop(1, 'rgba(0, 206, 201, 0.7)');
+    waterGrad.addColorStop(1, 'rgba(0, 206, 201, 0.8)');
     ctx.fillStyle = waterGrad;
     ctx.fillRect(0, height * 0.7, width, height * 0.3);
 }
@@ -118,20 +110,17 @@ function drawWater() {
 function animateScenery() {
     ctx.clearRect(0, 0, width, height);
     
-    // 背景色 (宣纸色)
     ctx.fillStyle = '#e9e4d4';
     ctx.fillRect(0, 0, width, height);
 
-    // 太阳
-    ctx.fillStyle = 'rgba(214, 48, 49, 0.6)';
+    ctx.fillStyle = 'rgba(214, 48, 49, 0.7)';
     ctx.beginPath();
-    ctx.arc(width * 0.85, height * 0.25, 45, 0, Math.PI * 2);
+    ctx.arc(width * 0.85, height * 0.25, 55, 0, Math.PI * 2);
     ctx.fill();
 
     drawMountains();
     
-    // 画云
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
     clouds.forEach(cloud => {
         ctx.beginPath();
         ctx.arc(cloud.x, cloud.y, cloud.size, 0, Math.PI*2);
@@ -147,13 +136,11 @@ function animateScenery() {
 
     drawWater();
 
-    // 画鱼
     fishes.forEach(fish => {
-        ctx.fillStyle = 'rgba(45, 52, 54, 0.7)'; // 水墨鱼
+        ctx.fillStyle = 'rgba(45, 52, 54, 0.8)'; 
         ctx.beginPath();
         ctx.ellipse(fish.x, fish.y, fish.size*2, fish.size, 0, 0, Math.PI*2);
         ctx.fill();
-        // 鱼尾巴
         ctx.beginPath();
         ctx.moveTo(fish.speed > 0 ? fish.x - fish.size*2 : fish.x + fish.size*2, fish.y);
         ctx.lineTo(fish.speed > 0 ? fish.x - fish.size*3.5 : fish.x + fish.size*3.5, fish.y - fish.size*1.5);
@@ -165,7 +152,7 @@ function animateScenery() {
         if(fish.speed < 0 && fish.x < -20) fish.x = width + 20;
     });
 
-    animationId = requestAnimationFrame(animateScenery);
+    requestAnimationFrame(animateScenery);
 }
 
 // ==========================================
